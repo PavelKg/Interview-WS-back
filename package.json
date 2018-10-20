@@ -1,0 +1,21 @@
+{
+  "name": "Interview-WS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "SET NODE_ENV=development && SET NODE_PORT=8765 && nodemon server.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-PavelKg:PavelKg/Interview-WS-back.git"
+  },
+  "author": "Pavlenko Pavel",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^8.3.0",
+    "nodemon": "^1.18.4",
+    "pg": "^7.5.0"
+  }
+}
