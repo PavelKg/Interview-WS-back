@@ -1,12 +1,12 @@
-const url     = require("url") 
-const Routes  = require("./routes")
-const auth    = require("./auth")
-const dbPoll  = require("./db")
-const utils   = require("./utils")
+const url = require("url")
+const Routes = require("./routes")
+const auth = require("./auth")
+const dbPoll = require("./db")
+const utils = require("./utils")
 
 const app = {
     user: {},
-    db:  new dbPoll(),
+    db: new dbPoll(),
     // host: '',
     // http: 'http'
 };
@@ -15,9 +15,9 @@ const routes = new Routes(app);
 
 let server = function (request, response) {
     const { headers, method } = request;
-    const _url = url.parse(request.url, true),
-          pathname = _url.pathname,
-          query = _url.query;
+    const _url = url.parse(request.url, true)
+    const pathname = _url.pathname
+    const query = _url.query
 
     app.host = headers.host;
     // for OPTIONS type
@@ -29,39 +29,47 @@ let server = function (request, response) {
     //     response.end();
     //     return false;
     // }
-    
-    auth.login(headers).then( result => {
-        const client_ip = request.connection.remoteAddress;
-        const {user, accept} = result;
-        console.log('%s: client:%s; pathname:%s', '[' + new Date().toUTCString() + '] ', client_ip, pathname)
-        const session = {
-            user: user,
-            res:  response
-        };
 
-        //app.user = user;
-        //app.res = response;
+    const client_ip = request.connection.remoteAddress;
+    const session = {
+        user: '',
+        res: response
+    };
 
-        const route = routes.createChild(session, pathname);
-        switch (method) {
-            case "GET":
-                routes.get(route, query);                
-                break;
-            case "POST":        
-                routes.post(route, query);
-                break;
+    if (pathname.match('^/api/login[\/]*$')) {
+        const auth_route = routes.createChild(session, pathname);
+        if (typeof auth_route[method.toLowerCase()] !== 'function') {
+					const error_text =`request method '${method}' not found`
+					const answer = {
+						res: response, code: 200, body: JSON.stringify({ code: 200, status: 'error', error_code: error_text })
+					}
+					utils.response(answer);					
+					return
         }
-    },
-    error=>{
-        console.log('------------------------ error --------------------------')
-        const { code=404, status='undefined', error_code=100 } = error;
-        console.log(error)
-        const answer = { res: response, code: code, body: JSON.stringify(
-            { code, status, error_code }
-        )};            
-        utils.response( answer);
-        return false;
-    })
+        auth_route[method.toLowerCase()](query);
+    } else {
+        auth.login(headers).then(result => {
+            const { user, accept } = result;
+            console.log('%s: client:%s; pathname:%s', '[' + new Date().toUTCString() + '] ', client_ip, pathname)
+            session.user = user;
+            //app.user = user;
+            //app.res = response;
+            const route = routes.createChild(session, pathname);
+            route[method.toLowerCase()](query);
+        },
+            error => {
+                console.log('------------------------ error --------------------------')
+                const { code = 404, status = 'undefined', error_code = 100 } = error;
+                console.log(error)
+                const answer = {
+                    res: response, code: code, body: JSON.stringify(
+                        { code, status, error_code }
+                    )
+                };
+                utils.response(answer);
+                return false;
+            })
+    }
 }
 
 module.exports = server;

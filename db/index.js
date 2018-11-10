@@ -3,10 +3,10 @@ const { Pool } = require('pg')
 class dbPool {
   constructor() {
       this.pool = new Pool({
-        user: "postgres",
-        host: "37.228.112.18",
-        database: "mst_stat",
-        password: "zeroc00l",
+        user: "webuser",
+        host: "dev.pepex.kg",
+        database: "interview_ws",
+        password: "qpjAaNeQWl",
         port: 5432,
         max: 20,
         client_encoding: "utf8"
