@@ -8,7 +8,7 @@ const c_type = {
   icon: "image/x-icon"
 };
 
-const response = (answer)=>{
+const response = (answer) => {
   try{
     const {res, code, body} = answer;
     res.writeHead(code, content_type(c_type["json"]));
