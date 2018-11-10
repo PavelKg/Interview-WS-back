@@ -9,6 +9,7 @@ let payload = {
 	user: {
 		personal_id: "",
 		company_id: "",
+		personal_role: "",
 	},
 	exp: Math.floor(Date.now() / 1000) + 720 * 60,
 	iat: Math.floor(Date.now() / 1000),
