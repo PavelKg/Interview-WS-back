@@ -51,6 +51,14 @@ let server = function (request, response) {
     app.host = headers.host;
     answer.res = response
 
+    response.setHeader("Access-Control-Allow-Headers", "content-type, accept, authorization");
+    response.setHeader("Access-Control-Allow-Methods", "*");
+
+    if (method === 'OPTIONS') {
+        response.end();
+        return false;
+    }
+
     if (pathname.match('^/api/login[\/]*$')) {
         const auth_route = routes.createChild(session, pathname);
         if (typeof auth_route[method.toLowerCase()] !== 'function') {
