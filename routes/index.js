@@ -1,6 +1,8 @@
-const utils     = require("../utils")
+const utils  = require("../utils")
 const root   = require("./root")
-const login   = require("./login")
+const login  = require("./login")
+const role   = require("./role")
+
 
 let answer = {}; 
 class Route {
@@ -9,6 +11,7 @@ class Route {
     this.routing = { 
         ["/"]: root,
         ["/api/login/"]: login,
+        ["/api/role/"]: role,        
     };
   } 
   createChild(_session, _pathname) {
@@ -40,16 +43,6 @@ class Route {
       return
     }
   }
-  
-  get(_route, _query) {
-    _route.getData(_query);
-    return false;
-    //utils.response(answer);
-  };
-  
-  post (_query) {
-    return false;
-  };
 };  
 
 module.exports = Route;

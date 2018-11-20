@@ -30,6 +30,7 @@ const setQuery = (request) => {
                     request.connection.destroy();
             });
             request.on('end', function () {
+                console.log('post_on_end')
               resolve(body)
             });
         } else if (method === 'GET') {
@@ -73,9 +74,14 @@ let server = function (request, response) {
     } else {
         auth.login(headers).then(result => {
             const { user, accept } = result;
-            console.log('%s: client:%s; pathname:%s', '[' + new Date().toUTCString() + '] ', client_ip, pathname)
             session.user = user;
             const route = routes.createChild(session, pathname);
+            if (typeof route[method.toLowerCase()] !== 'function') {
+                const error_text =`request method '${method}' not found`
+                answer.body = JSON.stringify({ code: 400, status: 'error', error_code: error_text })
+                utils.response(answer);					
+                return
+            }            
             setQuery(request).then((query) => {            
                 route[method.toLowerCase()](query)
             })
