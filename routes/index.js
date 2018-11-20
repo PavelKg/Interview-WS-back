@@ -1,7 +1,7 @@
 const utils  = require("../utils")
 const root   = require("./root")
 const login  = require("./login")
-const role   = require("./role")
+const user_info   = require("./user_info")
 
 
 let answer = {}; 
@@ -11,7 +11,7 @@ class Route {
     this.routing = { 
         ["/"]: root,
         ["/api/login/"]: login,
-        ["/api/role/"]: role,        
+        ["/api/user_info/"]: user_info,        
     };
   } 
   createChild(_session, _pathname) {

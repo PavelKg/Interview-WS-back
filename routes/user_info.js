@@ -16,15 +16,15 @@ class role {
 
 		try { 
 			const {personal_id, company_id} =  this.session.user
-			const data = await this.app.db.query(`select userRole($1::text, $2) dates`, 
+			const data = await this.app.db.query(`select user_info($1::text, $2) dates`, 
 			[personal_id, company_id]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
-				throw new Error("Role is not found for user !!!")
+				throw new Error("User not found !!!")
 			}
 
 			const userRole = JSON.parse(JSON.stringify(data.rows[0].dates))
-			answer = {...answer, body: JSON.stringify({code: 200, role: userRole }) }
+			answer = {...answer, body: JSON.stringify({code: 200, user_info: userRole }) }
 
 		} catch(err) {
 			answer = {...answer, body: JSON.stringify({code: 400, error: err.message})}
