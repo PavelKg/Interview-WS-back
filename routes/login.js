@@ -24,7 +24,7 @@ class login {
 				throw new Error("Need more data!!!")
 			}
 			const hash = await crypto.createHash ('sha256').update (password).digest ('hex')
-			const data = await this.app.db.query(`select * from login($1::text, $2, decode($3::text, 'hex')) dates`, 
+			const data = await this.app.db.query(`select * from login($1::text, $2::text, decode($3::text, 'hex')) dates`, 
 			[personal_id, company_id, hash]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {

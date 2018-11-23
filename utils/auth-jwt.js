@@ -11,13 +11,15 @@ let payload = {
 		company_id: "",
 		personal_role: "",
 	},
-	exp: Math.floor(Date.now() / 1000) + 720 * 60,
-	iat: Math.floor(Date.now() / 1000),
+	exp: 0,
+	iat: 0,
 	iss: "pepex.kg/api",
 };
 
 JWT.gen = (user_props) => {
-	payload = {...payload, user: user_props}
+	const exp = Math.floor(Date.now() / 1000) + 720 * 60
+	const iat = Math.floor(Date.now() / 1000)
+	payload = {...payload, user: user_props, exp, iat}
 	const token = jwt.sign(payload, appKey, header)
 	console.log
 	return token
