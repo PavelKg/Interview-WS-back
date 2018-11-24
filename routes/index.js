@@ -1,7 +1,8 @@
-const utils  = require("../utils")
-const root   = require("./root")
-const login  = require("./login")
-const user_info   = require("./user_info")
+const utils     = require("../utils")
+const root      = require("./root")
+const login     = require("./login")
+const user_info = require("./user_info")
+const companies = require("./companies")
 
 
 let answer = {}; 
@@ -12,6 +13,7 @@ class Route {
         ["/"]: root,
         ["/api/login/"]: login,
         ["/api/user_info/"]: user_info,        
+        ["/api/companies/"]: companies,        
     };
   } 
   createChild(_session, _pathname) {
@@ -46,3 +48,4 @@ class Route {
 };  
 
 module.exports = Route;
+
