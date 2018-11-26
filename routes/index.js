@@ -12,12 +12,12 @@ class Route {
     this.routing = { 
         ["/"]: root,
         ["/api/login/"]: login,
-        ["/api/user_info/"]: user_info,        
+        ["/api/user/"]: user_info,        
         ["/api/companies/"]: companies,        
     };
   } 
   createChild(_session, _pathname) {
-
+    console.log('_pathname=',_pathname)
     const path = _pathname[_pathname.length-1]!=="/"? _pathname+="/" : _pathname;
 
     if (this.routing[path]==undefined){

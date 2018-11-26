@@ -10,87 +10,92 @@ class companies {
 				code: 200,
 				body: ''
 			}
+			const { company_id, personal_id } = this.session.user
+			this.acc =  {company: company_id, user: personal_id}
+	}
+
+	error_mes (err) {
+		return JSON.stringify({code: 400, type: 'text', data: {name: err.name, message: err.message}})
 	}
 
 	async get(query) { // get list comanies
+		let answer = this.answer
+
 		try { 
-			const data = await this.app.db.query(`select company_list() dates`);
+			const data = await this.app.db.query(`select company_list($1::json) dates`,
+			[JSON.stringify(this.acc)]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
-				throw new Error("User not found !!!")
+				throw Error("Data not found !!!")
 			}
 			const companies = JSON.parse(JSON.stringify(data.rows[0].dates))
-			this.answer = {...this.answer, body: JSON.stringify({code: 200, company_list: companies }) }
+			answer = {...answer, body: JSON.stringify({code: 200, type: 'hypercube',  data: companies }) }
 
 		} catch(err) {
-			this.answer = {...this.answer, body: JSON.stringify({code: 400, error: err.message})}
+			answer = {...answer, body: this.error_mes(err)}
 
 		}	finally {
-			utils.response(this.answer);
+			utils.response(answer);
 		}
 	}
 	
 	async post(query) { // add company
+		let answer = this.answer
 		try { 
-			const {name, description} =  query
-			const data = await this.app.db.query(`select company_add($1::text, $2::text) dates`, 
-			[name, description]);
+			const {name, description} =  JSON.parse(query)
+			const data = await this.app.db.query(`select company_add($1::json, $2::text, $3::text) dates`, 
+			[JSON.stringify(this.acc), name, description]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
-				throw new Error("User not found !!!")
+				throw Error("Data not found !!!")
 			}
-
 			const add_res = JSON.parse(JSON.stringify(data.rows[0].dates))
-			answer = {...answer, body: JSON.stringify({code: 200, result: add_res }) }
-
+			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {result: add_res.result} }) }
 		} catch(err) {
-			answer = {...answer, body: JSON.stringify({code: 400, error: err.message})}
-
+			answer = {...answer, body: this.error_mes(err)}
 		}	finally {
 			utils.response(answer);
 		}
 	}
 	
-	async put(query) { // change company data
+	async put(query) { // add company
+		let answer = this.answer
 		try { 
-			const {personal_id, company_id} =  this.session.user
-			const data = await this.app.db.query(`select user_info($1::text, $2) dates`, 
-			[personal_id, company_id]);
+			const {name, upd_object} =  JSON.parse(query)
+			const data = await this.app.db.query(`select company_upd($1::json, $2::text, $3::JSON) dates`, 
+			[JSON.stringify(this.acc), name, upd_object]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
-				throw new Error("User not found !!!")
+				throw Error("Data not found !!!")
 			}
-
-			const userRole = JSON.parse(JSON.stringify(data.rows[0].dates))
-			answer = {...answer, body: JSON.stringify({code: 200, user_info: userRole }) }
-
+			const upd_res = JSON.parse(JSON.stringify(data.rows[0].dates))
+			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {result: upd_res.result} }) }
 		} catch(err) {
-			answer = {...answer, body: JSON.stringify({code: 400, error: err.message})}
-
+			answer = {...answer, body: this.error_mes(err)}
 		}	finally {
 			utils.response(answer);
 		}
-	}		
-	async delete(query) { // delete company
+	}
+
+
+	async delete(query) { // add company
+		let answer = this.answer
 		try { 
-			const {personal_id, company_id} =  this.session.user
-			const data = await this.app.db.query(`select user_info($1::text, $2) dates`, 
-			[personal_id, company_id]);
+			const {name} =  JSON.parse(query)
+			const data = await this.app.db.query(`select company_del($1::json, $2::text) dates`, 
+			[JSON.stringify(this.acc), name]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
-				throw new Error("User not found !!!")
+				throw Error("Data not found !!!")
 			}
-
-			const userRole = JSON.parse(JSON.stringify(data.rows[0].dates))
-			answer = {...answer, body: JSON.stringify({code: 200, user_info: userRole }) }
-
+			const del_res = JSON.parse(JSON.stringify(data.rows[0].dates))
+			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {result: del_res.result} }) }
 		} catch(err) {
-			answer = {...answer, body: JSON.stringify({code: 400, error: err.message})}
-
+			answer = {...answer, body: this.error_mes(err)}
 		}	finally {
 			utils.response(answer);
 		}
-	}		
+	}
 
 }
 

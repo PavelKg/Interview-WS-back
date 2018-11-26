@@ -21,6 +21,7 @@ class dbPool {
       return result
     } catch(err){
       console.log("DB error=%s",err)
+      throw Error(err)
     }
   }
 }

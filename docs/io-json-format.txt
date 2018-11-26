@@ -1,0 +1,51 @@
+Input API
+
+HTTP REQUESTS
+GET     // get data
+POST    // add new item
+PUT     // change item
+DELETE  // delete item
+
+support for follow:
+
+/api/login
+REQUIRED HEADERS: ""
+POST params: /?company_id=''&personal_id=''&password=''
+
+/api/user
+REQUIRED HEADERS: "Authorization" (token)
+GET params: company_id, personal_id 
+
+/api/companies
+GET params: nothing (session user param from jwt-token ) 
+POST params: {name: "", description: ""} 
+PUT params: {name: "", field: "", value:""} 
+DELETE params: {name: ""} 
+
+
+___________________________________________________________________________________________________
+___________________________________________________________________________________________________
+
+
+Output API
+
+answer for correct request
+
+{
+  "code": "200",
+  "type": "numeric | text | list | hypercube"
+  "data": "year: {value: 2018}"
+          "name: {value:pepex}"  
+          "user_type: [super, management, applicant]"
+          "company_list:[{name: pepex, description: "this is super company"}, {name: new, description: "this is other company"}]"
+          "result": "success"
+}
+
+answer for not correct request
+
+{
+  "code": "400 | 500",
+  "type": "text"
+  "data": "error: {name:"add_company", message: "duplicate company name"}"
+}
+___________________________________________________________________________________________________

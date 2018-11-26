@@ -1,5 +1,4 @@
 const url = require("url")
-//const qs = require('querystring');
 const Routes = require("./routes")
 const auth = require("./auth")
 const dbPoll = require("./db")
@@ -30,7 +29,6 @@ const setQuery = (request) => {
                     request.connection.destroy();
             });
             request.on('end', function () {
-                console.log('post_on_end')
               resolve(body)
             });
         } else if (method === 'GET') {
