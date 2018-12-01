@@ -1,7 +1,7 @@
 const utils     = require("../utils")
 const root      = require("./root")
 const login     = require("./login")
-const user_info = require("./user_info")
+const user = require("./user")
 const companies = require("./companies")
 
 
@@ -12,7 +12,7 @@ class Route {
     this.routing = { 
         ["/"]: root,
         ["/api/login/"]: login,
-        ["/api/user/"]: user_info,        
+        ["/api/user/"]: user,        
         ["/api/companies/"]: companies,        
     };
   } 
