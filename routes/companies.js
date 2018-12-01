@@ -58,10 +58,12 @@ class companies {
 		}
 	}
 	
-	async put(query) { // add company
+	async put(query) { // edit company
 		let answer = this.answer
+		console.log(query)
 		try { 
 			const {name, upd_object} =  JSON.parse(query)
+			console.log(name)
 			const data = await this.app.db.query(`select company_upd($1::json, $2::text, $3::JSON) dates`, 
 			[JSON.stringify(this.acc), name, upd_object]);
 

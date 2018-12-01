@@ -21,7 +21,7 @@ const setQuery = (request) => {
     return new Promise((resolve, reject) => {
         const { method } = request
         const _url = url.parse(request.url, true)
-        if (method === 'POST') {
+        if (method === 'POST' || method === 'PUT' || method === 'DELETE') {
             let body = '';
             request.on('data', function (data) {
                 body += data;
