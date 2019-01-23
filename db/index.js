@@ -14,8 +14,8 @@ class dbPool {
   };
 
   async query(text, params) {
+    let client = await this.pool.connect()
     try {
-      const client = await this.pool.connect()
       const result =  await client.query(text, params)
       return result
     } catch(err) {
@@ -24,10 +24,6 @@ class dbPool {
     } finally {
       client.release()
     }      
-    // } catch(err){
-    //   
-    //   throw Error(err)
-    // }
   }
 }
 
