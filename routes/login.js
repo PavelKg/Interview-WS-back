@@ -18,7 +18,7 @@ class login {
 
 		try { 
 			const jsonQuery = JSON.parse(query);
-			console.log(query)
+			//console.log(query)
 			const {personal_id, company_id, password} = jsonQuery
 			if (!personal_id || !company_id || !password ) {
 				throw new Error("Need more data!!!")
@@ -35,10 +35,8 @@ class login {
 			const user = {personal_id: jwtData.personal_id, company_id: jwtData.company_id, role: jwtData.role} 
 			const token = jwt.gen(user)
 			answer = {...answer, body: JSON.stringify({code: 200, token: token }) }
-
 		} catch(err) {
 			answer = {...answer, body: JSON.stringify({code: 400, error: err.message})}
-
 		}	finally {
 			utils.response(answer);
 		}

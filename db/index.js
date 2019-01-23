@@ -14,15 +14,20 @@ class dbPool {
   };
 
   async query(text, params) {
-    const client = await this.pool.connect()
     try {
+      const client = await this.pool.connect()
       const result =  await client.query(text, params)
-      client.release()
       return result
-    } catch(err){
+    } catch(err) {
       console.log("DB error=%s",err)
       throw Error(err)
-    }
+    } finally {
+      client.release()
+    }      
+    // } catch(err){
+    //   
+    //   throw Error(err)
+    // }
   }
 }
 
