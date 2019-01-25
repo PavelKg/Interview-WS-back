@@ -50,7 +50,7 @@ class companies {
 				throw Error("Data not found !!!")
 			}
 			const add_res = JSON.parse(JSON.stringify(data.rows[0].dates))
-			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {result: add_res.result} }) }
+			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {...add_res} }) }
 		} catch(err) {
 			answer = {...answer, body: this.error_mes(err)}
 		}	finally {
@@ -70,7 +70,7 @@ class companies {
 				throw Error("Data not found !!!")
 			}
 			const upd_res = JSON.parse(JSON.stringify(data.rows[0].dates))
-			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {result: upd_res.result} }) }
+			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {...upd_res} }) }
 		} catch(err) {
 			answer = {...answer, body: this.error_mes(err)}
 		}	finally {
@@ -90,7 +90,7 @@ class companies {
 				throw Error("Data not found !!!")
 			}
 			const del_res = JSON.parse(JSON.stringify(data.rows[0].dates))
-			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {result: del_res.result} }) }
+			answer = {...answer, body: JSON.stringify({code: 200, type:'text', data: {...del_res} }) }
 		} catch(err) {
 			answer = {...answer, body: this.error_mes(err)}
 		}	finally {
