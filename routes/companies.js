@@ -42,9 +42,9 @@ class companies {
 	async post(query) { // add company
 		let answer = this.answer
 		try { 
-			const {name, description} =  JSON.parse(query)
-			const data = await this.app.db.query(`select company_add($1::json, $2::text, $3::text) dates`, 
-			[JSON.stringify(this.acc), name, description]);
+			const {company_data} =  JSON.parse(query)
+			const data = await this.app.db.query(`select company_add($1::json, $2::JSON) dates`, 
+			[JSON.stringify(this.acc), company_data]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
 				throw Error("Data not found !!!")
@@ -60,12 +60,11 @@ class companies {
 	
 	async put(query) { // edit company
 		let answer = this.answer
-		console.log(query)
+		//console.log(query)
 		try { 
-			const {name, upd_object} =  JSON.parse(query)
-			console.log(name)
-			const data = await this.app.db.query(`select company_upd($1::json, $2::text, $3::JSON) dates`, 
-			[JSON.stringify(this.acc), name, upd_object]);
+			const {company_id, company_data} =  JSON.parse(query)
+			const data = await this.app.db.query(`select company_upd($1::json, $2, $3::JSON) dates`, 
+			[JSON.stringify(this.acc), Number(company_id), company_data]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
 				throw Error("Data not found !!!")
@@ -83,9 +82,9 @@ class companies {
 	async delete(query) { // add company
 		let answer = this.answer
 		try { 
-			const {name} =  JSON.parse(query)
-			const data = await this.app.db.query(`select company_del($1::json, $2::text) dates`, 
-			[JSON.stringify(this.acc), name]);
+			const {company_id} =  JSON.parse(query)
+			const data = await this.app.db.query(`select company_del($1::json, $2::int) dates`, 
+			[JSON.stringify(this.acc), Number(company_id)]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
 				throw Error("Data not found !!!")
