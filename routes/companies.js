@@ -15,7 +15,7 @@ class companies {
 	}
 
 	error_mes (err) {
-		return JSON.stringify({code: 400, type: 'text', data: {name: err.name, message: err.message}})
+		return JSON.stringify({code: 400, type: 'text', data: {result: err.name, message: err.message}})
 	}
 
 	async get(query) { // get list comanies
