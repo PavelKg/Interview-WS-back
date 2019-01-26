@@ -3,7 +3,7 @@ const root      = require("./root")
 const login     = require("./login")
 const user = require("./user")
 const companies = require("./companies")
-const users = require("./users")
+const administrators = require("./administrators")
 
 
 let answer = {}; 
@@ -15,7 +15,7 @@ class Route {
         ["/api/login/"]: login,
         ["/api/user/"]: user,        
         ["/api/companies/"]: companies,        
-        ["/api/users/"]: users,                
+        ["/api/administrators/"]: administrators,                
     };
   } 
   createChild(_session, _pathname) {

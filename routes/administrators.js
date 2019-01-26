@@ -1,7 +1,7 @@
 "use strict";
 const utils = require("../utils")
 
-class users {
+class administrators {
 	constructor(app, session) {
 			this.app = app;
 			this.session = session;
@@ -18,11 +18,11 @@ class users {
 		return JSON.stringify({code: 400, type: 'text', data: {result: err.name, message: err.message}})
 	}
 
-	async get(query) { // get list users
+	async get(query) { // get list administrators
 		let answer = this.answer
 
 		try { 
-			const data = await this.app.db.query(`select user_list($1::json) dates`,
+			const data = await this.app.db.query(`select administrators_list($1::json) dates`,
 			[JSON.stringify(this.acc)]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
@@ -100,4 +100,4 @@ class users {
 
 }
 
-module.exports = users
+module.exports = administrators
