@@ -100,4 +100,4 @@ class videos {
 
 }
 
-module.exports = administrators
+module.exports = videos
