@@ -44,7 +44,7 @@ class administrators {
 		try { 
 			const {user_data} =  JSON.parse(query)
 			const data = await this.app.db.query(`select user_add($1::json, $2::JSON) dates`, 
-			[JSON.stringify(this.acc), user_data]);
+			[JSON.stringify(this.acc), JSON.stringify(user_data)]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
 				throw Error("Data not found !!!")
@@ -62,9 +62,9 @@ class administrators {
 		let answer = this.answer
 		//console.log(query)
 		try { 
-			const {user_id, company_data} =  JSON.parse(query)
+			const {user_id, user_data} =  JSON.parse(query)
 			const data = await this.app.db.query(`select user_upd($1::json, $2, $3::JSON) dates`, 
-			[JSON.stringify(this.acc), Number(user_id), user_data]);
+			[JSON.stringify(this.acc), Number(user_id), JSON.stringify(user_data)]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
 				throw Error("Data not found !!!")

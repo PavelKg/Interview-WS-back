@@ -17,7 +17,7 @@ let payload = {
 };
 
 JWT.gen = (user_props) => {
-	const exp = Math.floor(Date.now() / 1000) + 720 * 60
+	const exp = Math.floor(Date.now().valueOf() / 1000) + 720 * 60
 	const iat = Math.floor(Date.now() / 1000)
 	payload = {...payload, user: user_props, exp, iat}
 	const token = jwt.sign(payload, appKey, header)
