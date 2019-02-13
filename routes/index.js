@@ -1,9 +1,10 @@
 const utils     = require("../utils")
 const root      = require("./root")
 const login     = require("./login")
-const user = require("./user")
+const user      = require("./user")
 const companies = require("./companies")
 const administrators = require("./administrators")
+const videos    = require("./videos")
 
 
 let answer = {}; 
@@ -16,6 +17,7 @@ class Route {
         ["/api/user/"]: user,        
         ["/api/companies/"]: companies,        
         ["/api/administrators/"]: administrators,                
+        ["/api/videos/"]: videos,                
     };
   } 
   createChild(_session, _pathname) {
