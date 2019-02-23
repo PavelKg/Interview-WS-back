@@ -20,10 +20,10 @@ class videos {
 
 	async get(query) { // get list administrators
 		let answer = this.answer
-
 		try { 
-			const data = await this.app.db.query(`select videos_list($1::json) dates`,
-			[JSON.stringify(this.acc)]);
+			const { params } = query
+			const data = await this.app.db.query(`select videos_list($1::json, $2::json) dates`,
+			[JSON.stringify(this.acc), params]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
 				throw Error("Data not found !!!")
