@@ -23,7 +23,7 @@ class videos {
 		try { 
 			const { params } = query
 			const data = await this.app.db.query(`select videos_list($1::json, $2::json) dates`,
-			[JSON.stringify(this.acc), params]);
+			[JSON.stringify(this.acc), JSON.stringify(params)]);
 
 			if (data.rows.length == 0 || data.rows[0].dates == null) {
 				throw Error("Data not found !!!")
