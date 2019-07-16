@@ -18,12 +18,13 @@ class login {
 
 		try { 
 			const jsonQuery = JSON.parse(query);
-			//console.log(query)
+			console.log(query)
 			const {personal_id, company_id, password} = jsonQuery
 			if (!personal_id || !company_id || !password ) {
 				throw new Error("Need more data!!!")
 			}
 			const hash = await crypto.createHash ('sha256').update (password).digest ('hex')
+			console.log('hash=', hash)
 			const data = await this.app.db.query(`select * from login($1::text, $2::text, decode($3::text, 'hex')) dates`, 
 			[personal_id, company_id, hash]);
 

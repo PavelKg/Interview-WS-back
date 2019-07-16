@@ -17,6 +17,7 @@
     "event-stream": "^3.3.4",
     "jsonwebtoken": "^8.3.0",
     "nodemon": "^1.18.4",
+    "path-to-regexp": "^3.0.0",
     "pg": "^7.5.0",
     "querystring": "^0.2.0"
   }

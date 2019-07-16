@@ -52,6 +52,7 @@ let server = function (request, response) {
 
     response.setHeader("Access-Control-Allow-Headers", "content-type, accept, authorization");
     response.setHeader("Access-Control-Allow-Methods", "*");
+    response.setHeader("Access-Control-Allow-Origin", "*");
 
     if (method === 'OPTIONS') {
         response.end();
